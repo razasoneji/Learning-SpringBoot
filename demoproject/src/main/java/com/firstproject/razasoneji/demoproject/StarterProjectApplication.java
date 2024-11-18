@@ -22,6 +22,13 @@ public class StarterProjectApplication implements CommandLineRunner {
 	@Autowired
 	Banana banana1;
 
+	private final DbService dbService;
+
+	//Constructor DI
+	@Autowired
+	StarterProjectApplication(DbService dbService){
+		this.dbService = dbService;
+	}
 
 	// This is a direct field injection.
 	// This is not some sort of constructor or setter injection.
@@ -42,6 +49,10 @@ public class StarterProjectApplication implements CommandLineRunner {
 		banana1.eatBanana();
 		// As two instances created for it. while for singleton only one.
 		System.out.println("Are both the guava's equal : " + (guava1.hashCode()==guava2.hashCode()));
+
+		System.out.println(dbService.printmsg());
+
+
 
 	}
 

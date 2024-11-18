@@ -24,10 +24,13 @@ public class StarterProjectApplication implements CommandLineRunner {
 
 	private final DbService dbService;
 
+	private final DbService2 dbService2;
+
 	//Constructor DI
 	@Autowired
-	StarterProjectApplication(DbService dbService){
+	StarterProjectApplication(DbService dbService,DbService2 dbService2) {
 		this.dbService = dbService;
+		this.dbService2 = dbService2;
 	}
 
 	// This is a direct field injection.
@@ -40,6 +43,8 @@ public class StarterProjectApplication implements CommandLineRunner {
 	@Autowired
 	Guava guava2;
 
+
+
 	// we need to override the run method as the interface CommandLineRunner has it and if we implement it
 	// we need to provide some implementation for its methods (basic rule of implementing a class)
 
@@ -51,6 +56,7 @@ public class StarterProjectApplication implements CommandLineRunner {
 		System.out.println("Are both the guava's equal : " + (guava1.hashCode()==guava2.hashCode()));
 
 		System.out.println(dbService.printmsg());
+		System.out.println(dbService2.getData());
 
 
 

@@ -11,6 +11,7 @@ public class DbService2 {
     @Autowired
     public DbService2(CONFIGDB db) {
         this.db = db;
+
     }
 
     public String getData(){

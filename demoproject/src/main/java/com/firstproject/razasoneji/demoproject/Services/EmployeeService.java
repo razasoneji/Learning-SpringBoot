@@ -6,13 +6,14 @@ import com.firstproject.razasoneji.demoproject.Entities.EmployeeEntity;
 import com.firstproject.razasoneji.demoproject.Repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service // to denote it is a service bean
 public class EmployeeService {
@@ -34,10 +35,12 @@ public class EmployeeService {
     }
 
 
-    public EmployeeDTO getEmployeeById(Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
-        return modelMapper.map(employeeEntity, EmployeeDTO.class);
-
+    public Optional<EmployeeDTO> getEmployeeById(Long id) {
+//        Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(id);
+//        Optional<EmployeeDTO> map = modelMapper.map(employeeEntity, EmployeeDTO.class);
+//        return map;
+          return employeeRepository.findById(id).map(employeeEntity -> modelMapper.map(employeeEntity, EmployeeDTO.class));
+          // map returns the optional.
     }
 
     public List<EmployeeDTO> getAllEmployees() {
@@ -73,11 +76,12 @@ public class EmployeeService {
     }
 
 
-    public boolean deleteById(Long id) {
+    public Boolean deleteById(Long id) {
         boolean exists = isExistsEmployeeById(id);
         if(!exists){
             return false;
         }
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
         employeeRepository.delete(employeeEntity);
         return true;
     }

@@ -45,6 +45,14 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<!-- here we need the version as the springboot-starter-parent doesnt have it -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

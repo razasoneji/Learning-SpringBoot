@@ -7,8 +7,12 @@ import com.firstproject.razasoneji.demoproject.Repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service // to denote it is a service bean
 public class EmployeeService {
@@ -46,4 +50,59 @@ public class EmployeeService {
     }
 
 
+    public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
+        String password ;
+        if(null == employeeEntity) {
+            password = "password123";
+        }
+        else{
+            password = employeeEntity.getPassword();
+        }
+//        boolean exists = isExistsEmployeeById(id);
+//        String password;
+//        EmployeeEntity employeeEntity ;
+//        if(!exists){
+//            password= "abcd123";
+//        } and then fetch again by the employeeRepository
+
+        employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
+        employeeEntity.setPassword(password);
+        employeeRepository.save(employeeEntity);
+        return modelMapper.map(employeeEntity, EmployeeDTO.class);
+    }
+
+
+    public boolean deleteById(Long id) {
+        boolean exists = isExistsEmployeeById(id);
+        if(!exists){
+            return false;
+        }
+        employeeRepository.delete(employeeEntity);
+        return true;
+    }
+
+    public EmployeeDTO patchEmployee(Long id, Map<String, Object> updates) {
+        boolean exists = isExistsEmployeeById(id);
+        if(!exists){
+            return null;
+        }
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
+        // we shall use the lambda expression here for the map iteration.
+        // xyz.forEach((k,v)->{.....})
+        // Reflections utils is a wrapper class. Field field.
+        updates.forEach((key,value) -> {
+            Field field = ReflectionUtils.findField(EmployeeEntity.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, employeeEntity, value);
+
+        });
+
+        return modelMapper.map(employeeEntity,EmployeeDTO.class);
+
+    }
+
+    public boolean isExistsEmployeeById(Long id){
+        return employeeRepository.existsById(id);
+    }
 }

@@ -3,6 +3,7 @@ package com.firstproject.razasoneji.demoproject.Services;
 
 import com.firstproject.razasoneji.demoproject.DTO.EmployeeDTO;
 import com.firstproject.razasoneji.demoproject.Entities.EmployeeEntity;
+import com.firstproject.razasoneji.demoproject.Exceptions.ResourceNotFoundException;
 import com.firstproject.razasoneji.demoproject.Repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,10 @@ public class EmployeeService {
     }
 
 
-    public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
+    public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) throws ResourceNotFoundException {
+        if(!isExistsEmployeeById(id)){
+            throw new ResourceNotFoundException("Employee not found");
+        }
         EmployeeEntity employeeEntity = employeeRepository.findById(id).orElse(null);
         String password ;
         if(null == employeeEntity) {

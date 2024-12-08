@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Date;
+
 
 // entity is from jakarta and hence we need the spring data jpa dependency
 
@@ -29,6 +31,9 @@ public class EmployeeEntity {
     private String password;
     private String name;
     private Integer rollNo;
+    private String email;
+    private Date dateOfBirth;
+    private String gender;
 
 }
 

@@ -8,7 +8,9 @@ package com.firstproject.razasoneji.demoproject.DTO;
 //We try to have the validation in the controller itself and send the validated object to the service layer.
 //
 
+import com.firstproject.razasoneji.demoproject.annotations.DepartmentValidation;
 import com.firstproject.razasoneji.demoproject.annotations.GenderValidation;
+import com.firstproject.razasoneji.demoproject.annotations.SalaryValidation;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,8 +46,17 @@ public class EmployeeDTO {
 
     //@Pattern(regexp = "^(male|female)$")
 
+    @NotBlank
     @GenderValidation
     private String gender;
+
+    @NotBlank
+    @SalaryValidation
+    private Long salary;
+
+    @DepartmentValidation
+    private String department;
+
 
 
 }

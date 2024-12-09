@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 // its class/ implementation will be made itself.
 
 @Repository
-// needs to be written @repository as it will be injected as a bean , and for syntaxiual example too.
+// needs to be written @repository as it will be injected as a bean , and for syntaxual example too.
 // @ bean or @component needs to be mentioned in the class but here we will write it upon the repository
 
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity,Long> {

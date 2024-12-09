@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
                                     .status(HttpStatus.NOT_FOUND)
                                     .message(e.getMessage())
                                     .build();
-       return new ResponseEntity<>(new ApiResponse<>(apiError),apiError.getStatus());
+       return  ResponseEntity.status(apiError.getStatus()).body(new ApiResponse<>(apiError));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .message(errors.toString())
                 .build();
-        return new ResponseEntity<>(new ApiResponse<>(apiError),apiError.getStatus());
+        return ResponseEntity.status(apiError.getStatus()).body(new ApiResponse<>(apiError));
     }
 
     @ExceptionHandler(Exception.class)
@@ -48,6 +48,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .message("The errors is/are : "+ e.getMessage())
                 .build();
-        return new ResponseEntity<>(new ApiResponse<>(apiError),apiError.getStatus());
+        return ResponseEntity.status(apiError.getStatus()).body(new ApiResponse<>(apiError));
     }
 }

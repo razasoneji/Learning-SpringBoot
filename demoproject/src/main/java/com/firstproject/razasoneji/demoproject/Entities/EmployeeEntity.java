@@ -34,6 +34,8 @@ public class EmployeeEntity {
     private String email;
     private Date dateOfBirth;
     private String gender;
+    private Long salary;
+    private String department;
 
 }
 

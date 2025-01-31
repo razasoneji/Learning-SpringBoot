@@ -1,13 +1,13 @@
-package com.firstproject.razasoneji.demoproject;
+package com.project.basicsessionspringsecurity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StarterProjectApplication {
+public class BasicSessionSpringSecurityApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StarterProjectApplication.class, args);
+		SpringApplication.run(BasicSessionSpringSecurityApplication.class, args);
 	}
 
 }

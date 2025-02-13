@@ -3,8 +3,10 @@ package com.project.basicsessionspringsecurity.Services;
 
 import com.project.basicsessionspringsecurity.Dto.PostDto;
 import com.project.basicsessionspringsecurity.Entities.PostEntity;
+import com.project.basicsessionspringsecurity.Entities.User;
 import com.project.basicsessionspringsecurity.Repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto getPostById(Long id) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Optional<PostEntity> post = postRepository.findById(id);
         return post.map(value -> new PostDto(value.getId(), value.getTitle(), value.getContent()))
                 .orElseThrow(() -> new RuntimeException("Post not found"));

@@ -14,9 +14,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class User implements UserDetails {
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,18 +37,20 @@ public class AuthService {
     }
 
     public LoginResponse login(String username, String password) {
-        if(username.isBlank() || password.isBlank()) {
+        if(username.isBlank() || password.isBlank()) { // cannot be blank thing.
             throw new RuntimeException("Username or password cannot be empty");
         }
         Optional<User> exists = userRepository.findUserByUsername(username);
-        if(exists.isEmpty()){
+        if(exists.isEmpty()){ // if the user doesnt exist
             throw new RuntimeException("Please Signup First");
         }
-        User user = exists.get();
+        User user = exists.get(); //working on the user.
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        if(!authentication.isAuthenticated()){
+        // username password authentication based on username password.
+        if(!authentication.isAuthenticated()){ // ie username or password wrong
             throw new RuntimeException("Authentication Failed , unauthenticated user");
         }
+        LoginResponse.
         
 
     }

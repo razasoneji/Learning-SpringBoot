@@ -28,16 +28,17 @@ public class AuthController {
         return ResponseEntity.ok(loginResponse);
     }
 
+    // We are required to pass the whole body: User object.
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody User user){
         authService.signup(user);
         return ResponseEntity.ok("User successfully created");
     }
-//
-//    @PostMapping("/logout")
-//    public ResponseEntity<String> logout(@RequestBody User user){
-//
-//    }
-//
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(){
+
+    }
+
 
 }

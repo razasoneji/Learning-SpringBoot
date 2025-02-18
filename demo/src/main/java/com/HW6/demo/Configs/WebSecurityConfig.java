@@ -58,10 +58,10 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicRoutes).permitAll() // Allow public access to auth endpoints
-                        .requestMatchers(freeRoutes).hasAuthority(FREE.name()) // Only users with USER role can access
-                        .requestMatchers(basicRoutes).hasRole(BASIC.name())// Only users with ADMIN role can access
-                        .requestMatchers(premiumRoutes).hasRole(PREMIUM.name())
-                        .anyRequest().authenticated() // Secure all other endpoints
+                        .requestMatchers(freeRoutes).hasAuthority(FREE.name()) // Only users with Free plan can access
+                        .requestMatchers(basicRoutes).hasAuthority(BASIC.name())// Only users with Basic plan can access
+                        .requestMatchers(premiumRoutes).hasAuthority(PREMIUM.name()) // Only users with PREMIUM plan can access
+                        .anyRequest().authenticated() // Secure all other endpoints , including logout too
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless session

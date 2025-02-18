@@ -2,6 +2,7 @@ package com.HW6.demo.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,4 +30,9 @@ public class Session {
     private String refreshToken;
 
 
+    public Session(User user, LocalDateTime lastUsedAt, String refreshToken) {
+        this.user = user;
+        this.lastUsedAt = lastUsedAt;
+        this.refreshToken = refreshToken;
+    }
 }

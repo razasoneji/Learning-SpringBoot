@@ -20,19 +20,27 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    private final SessionService sessionService;
+    private final JwtService jwtService;
+
     @Autowired
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthService(UserRepository userRepository, SessionService sessionService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.sessionService = sessionService;
+        this.jwtService = jwtService;
     }
 
     public void signup(User user) {
-        Optional<User> exists = userRepository.findUserByUsername(user.getUsername());
-        if(exists.isPresent()) {
+        Optional<User> exists = userRepository.findUserByUsername(user.getUsername()); // check if user is already present
+        if(exists.isPresent()) {  // if exists throw error.
             throw new RuntimeException("User Already Exists");
         }
+        //else encrypt password
+        //other busienss logic is possible but we will let it be for now.
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //saving the user finally.
         userRepository.save(user);
     }
 
@@ -41,16 +49,21 @@ public class AuthService {
             throw new RuntimeException("Username or password cannot be empty");
         }
         Optional<User> exists = userRepository.findUserByUsername(username);
-        if(exists.isEmpty()){ // if the user doesnt exist
+        if(exists.isEmpty()){ // if the user doesnt exist throw error
             throw new RuntimeException("Please Signup First");
         }
-        User user = exists.get(); //working on the user.
+        User user = exists.get(); //working on the user that exists.
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         // username password authentication based on username password.
         if(!authentication.isAuthenticated()){ // ie username or password wrong
             throw new RuntimeException("Authentication Failed , unauthenticated user");
         }
-        LoginResponse.
+        String accessToken = jwtService.generateAccessToken(username);
+        String refreshToken = jwtService.generateRefreshToken(username);
+
+        sessionService.generateNewSession(user,refreshToken);
+
+        return new LoginResponse(username, accessToken, refreshToken);
         
 
     }

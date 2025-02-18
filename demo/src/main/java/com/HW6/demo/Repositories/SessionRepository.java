@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface SessionRepository extends JpaRepository<Session, Long> {
 
     @Query("SELECT COUNT(s) FROM Session s WHERE s.user.username = :userName")
-    Integer findNoOfSessionsByUserName(@Param("userName") String userName);
+    int  findNoOfSessionsByUserName(@Param("userName") String userName);
+
+    Session findTopByOrderByLastUsedAtAsc();
 
 
 }

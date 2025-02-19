@@ -29,7 +29,7 @@ import static com.HW6.demo.Entities.Subscription.*;
 public class WebSecurityConfig {
 
     public static final String[] publicRoutes ={
-            "/auth/login","/auth/register"
+            "/auth/login","/auth/signup","/auth/refresh","/auth/logout"
     }; //logout not to be included here, as only authenticated users can logout.
 
 
@@ -58,7 +58,7 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicRoutes).permitAll() // Allow public access to auth endpoints
-                        .requestMatchers(freeRoutes).hasAuthority(FREE.name()) // Only users with Free plan can access
+                        .requestMatchers(freeRoutes).hasAuthority(FREE.name())// Only users with Free plan can access
                         .requestMatchers(basicRoutes).hasAuthority(BASIC.name())// Only users with Basic plan can access
                         .requestMatchers(premiumRoutes).hasAuthority(PREMIUM.name()) // Only users with PREMIUM plan can access
                         .anyRequest().authenticated() // Secure all other endpoints , including logout too

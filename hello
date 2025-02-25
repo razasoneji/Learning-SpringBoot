@@ -1,0 +1,12 @@
+  BasicSpringSecuriySessionBased[m
+  DatabaseConnection[m
+  Entity[m
+  Response,advices,annotation,exceptions[m
+  auditing[m
+  basic-web[m
+  feature/autowired[m
+  feature/bean[m
+  h2-controller-jpa[m
+  hibenverse[m
+* [32mmain[m
+  service+DTO+Entity+Modelmapper+h2[m
